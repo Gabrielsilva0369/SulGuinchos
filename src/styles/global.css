@@ -1,0 +1,91 @@
+/* ==========================================================================
+   Sul Guinchos — CSS global
+   Reset + variáveis de identidade visual + shell principal
+   ========================================================================== */
+
+/* Paleta oficial (uso nas próximas sessões) */
+:root {
+  --cor-fundo: #050505;
+  --cor-preto-secundario: #0d0d0d;
+  --cor-vermelho: #ff1717;
+  --cor-vermelho-escuro: #b80000;
+  --cor-vermelho-sombra: rgba(255, 23, 23, 0.45);
+  --cor-branco: #f7f7f7;
+  --cor-cinza-texto: #c7c7c7;
+  --cor-cinza-borda: #3a3a3a;
+  --cor-card: #101010;
+
+  --fonte-titulo: "Bebas Neue", "Arial Narrow", sans-serif;
+  --fonte-corpo: "Montserrat", Arial, sans-serif;
+}
+
+/* Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  min-width: 320px;
+}
+
+body {
+  min-width: 320px;
+  background: var(--cor-fundo);
+  color: var(--cor-branco);
+  font-family: var(--fonte-corpo);
+  line-height: 1.5;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Links sem sublinhado */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Botões herdam a tipografia */
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Acessibilidade: reduzir movimento quando o usuário pedir */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Container principal da página */
+.page-shell {
+  width: 100%;
+  max-width: 520px;
+  min-height: 100vh;
+  margin: 0 auto;
+  background: #050505;
+  overflow: hidden;
+  position: relative;
+}
