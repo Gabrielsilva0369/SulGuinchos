@@ -8,7 +8,7 @@ const CALL_URL = "tel:+5511932363802";
 function FinalCTA() {
   return (
     <section id="contato" className="final-cta">
-      <div className="final-cta__panel">
+      <div className="final-cta__panel" data-reveal>
         <h2 className="final-cta__headline">
           Precisou? Chama a <span className="accent">Sul Guinchos!</span>
         </h2>

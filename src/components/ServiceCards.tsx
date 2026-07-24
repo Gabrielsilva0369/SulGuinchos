@@ -75,7 +75,7 @@ function ServiceCards() {
     <section id="beneficios" className="service-cards">
       <div className="service-cards__grid">
         {CARDS.map((card) => (
-          <article className="card" key={card.title}>
+          <article className="card" data-reveal key={card.title}>
             <span className="card__icon">{card.icon}</span>
             <h2 className="card__title">{card.title}</h2>
             <p className="card__desc">{card.desc}</p>
