@@ -14,7 +14,8 @@ function FinalCTA() {
         </h2>
 
         <a
-          className="final-cta__phone"
+          id="cta-telefone-final"
+          className="final-cta__phone cta-phone"
           href={CALL_URL}
           data-cta="telefone-final"
           onClick={trackCtaClick}
@@ -27,7 +28,8 @@ function FinalCTA() {
         </a>
 
         <a
-          className="final-cta__btn"
+          id="cta-whatsapp-final"
+          className="final-cta__btn cta-whatsapp"
           href={WHATSAPP_URL}
           target="_blank"
           rel="noopener noreferrer"

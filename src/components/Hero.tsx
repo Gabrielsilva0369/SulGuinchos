@@ -36,7 +36,8 @@ function Hero() {
         </p>
 
         <a
-          className="hero__btn hero__btn--whatsapp"
+          id="cta-whatsapp-hero"
+          className="hero__btn hero__btn--whatsapp cta-whatsapp"
           href={WHATSAPP_URL}
           target="_blank"
           rel="noopener noreferrer"
@@ -51,7 +52,8 @@ function Hero() {
         </a>
 
         <a
-          className="hero__btn hero__btn--call"
+          id="cta-telefone-hero"
+          className="hero__btn hero__btn--call cta-phone"
           href={CALL_URL}
           data-cta="telefone-hero"
           onClick={trackCtaClick}
