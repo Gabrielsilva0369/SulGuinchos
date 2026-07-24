@@ -76,7 +76,6 @@
   border-radius: 20px;
   border-top: 1px solid rgba(255, 255, 255, 0.4);
   background: linear-gradient(180deg, #ff2a2a 0%, #b80000 100%);
-  box-shadow: 0 10px 26px var(--cor-vermelho-sombra);
   color: var(--cor-branco);
   font-family: var(--fonte-titulo);
   font-weight: 400;
