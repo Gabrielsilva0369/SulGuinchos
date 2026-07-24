@@ -42,7 +42,19 @@ function FinalCTA() {
         </a>
       </div>
 
-      <p className="final-cta__footer">Sul Guinchos • Atendimento 24 horas</p>
+      <div className="final-cta__footer">
+        <p>Sul Guinchos • Atendimento 24 horas</p>
+        <p className="final-cta__credit">
+          Desenvolvido por{" "}
+          <a
+            href="https://maranatamarketing.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Maranata Marketing
+          </a>
+        </p>
+      </div>
     </section>
   );
 }

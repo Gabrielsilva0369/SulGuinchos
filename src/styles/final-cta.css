@@ -119,6 +119,27 @@
   color: var(--cor-cinza-texto);
 }
 
+.final-cta__credit {
+  margin-top: 4px;
+  font-size: 11px;
+  color: #8a8a8a;
+}
+
+.final-cta__credit a {
+  color: var(--cor-cinza-texto);
+  font-weight: 600;
+}
+
+.final-cta__credit a:hover {
+  color: var(--cor-vermelho);
+}
+
+.final-cta__credit a:focus-visible {
+  outline: 2px solid var(--cor-branco);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
 /* Respeita usuários que preferem menos movimento */
 @media (prefers-reduced-motion: reduce) {
   .final-cta__btn,
