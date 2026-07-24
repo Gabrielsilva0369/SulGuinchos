@@ -31,8 +31,8 @@ function Hero() {
         </h1>
 
         <p className="hero__subtitle">
-          Atendimento rápido para carros, motos e utilitários na{" "}
-          <span className="accent">região sul.</span>
+          Atendimento rápido para carros, motos e utilitários em{" "}
+          <span className="accent">Jundiaí e região.</span>
         </p>
 
         <a
