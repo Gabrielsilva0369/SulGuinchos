@@ -8,8 +8,9 @@
 import type { MouseEvent } from "react";
 import { logClick } from "./clickLog";
 
-// ID da conversão "clique para ligar" (Google Ads)
-const CALL_CONVERSION_SEND_TO = "AW-17555344928/BunjCP-Pw9gcEKCchbNB";
+// IDs de conversão do Google Ads
+const CALL_CONVERSION_SEND_TO = "AW-17555344928/BunjCP-Pw9gcEKCchbNB"; // Recurso "clique para ligar"
+const WHATSAPP_CONVERSION_SEND_TO = "AW-17555344928/xRe8CL6G5dgcEKCchbNB"; // Contato (WhatsApp)
 
 declare global {
   interface Window {
@@ -40,12 +41,22 @@ export function trackCtaClick(event: MouseEvent<HTMLAnchorElement>): void {
     window.dataLayer.push({ event: "cta_click", cta_name: ctaName });
   }
 
-  // Conversão "clique para ligar" do Google Ads (apenas nos links de telefone)
-  if (ctaName.startsWith("telefone") && typeof window.gtag === "function") {
-    window.gtag("event", "conversion", {
-      send_to: CALL_CONVERSION_SEND_TO,
-      value: 1.0,
-      currency: "BRL",
-    });
+  // Conversões do Google Ads por tipo de CTA
+  if (typeof window.gtag === "function") {
+    if (ctaName.startsWith("telefone")) {
+      // Recurso "clique para ligar"
+      window.gtag("event", "conversion", {
+        send_to: CALL_CONVERSION_SEND_TO,
+        value: 1.0,
+        currency: "BRL",
+      });
+    } else if (ctaName.startsWith("whatsapp")) {
+      // Contato (clique no botão do WhatsApp)
+      window.gtag("event", "conversion", {
+        send_to: WHATSAPP_CONVERSION_SEND_TO,
+        value: 1.0,
+        currency: "BRL",
+      });
+    }
   }
 }
