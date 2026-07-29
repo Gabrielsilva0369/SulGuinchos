@@ -6,19 +6,17 @@ import { getVisitorId } from "./clickLog";
    --------------------------------------------------------------------------
    Duas listas que VOCÊ edita à mão. Depois de editar: npm run build + deploy.
 
-   1) BLOCKED_IPS       -> IPs que não devem ver o site.
+   1) BLOCKED_IPS         -> IPs que não devem ver o site.
    2) BLOCKED_VISITOR_IDS -> ids de aparelho (coluna "visitor_id" da planilha).
 
-   Quando o visitante casa com uma das listas, o site:
-     - mostra a tela "Conteúdo indisponível" (bloqueio imediato no navegador), e
-     - grava o cookie  sg_block=1  para o Cloudflare bloquear na BORDA
-       (requisição seguinte nem chega no site). Veja docs/bloqueio-cloudflare.md
+   Quando o visitante casa com uma das listas, ele é REDIRECIONADO para o
+   Google (não vê o site). Também grava o cookie sg_block=1 (útil se um dia
+   você colocar Cloudflare/Firewall na frente para bloquear na borda).
 
    ⚠️ Honestidade:
-   - IP: no Cloudflare o bloqueio é "de verdade" (borda). Bom para IP fixo.
-   - Visitor ID / cookie: é "grudento", mas o usuário pode LIMPAR o cookie /
-     usar aba anônima / VPN e voltar. Não é 100%.
-   - NADA disso devolve dinheiro de anúncio (o clique no Google já foi cobrado).
+   - É verificado no navegador; pode ser burlado (aba anônima, VPN, JS off,
+     limpar cookies, outro aparelho). É um bloqueio "leve".
+   - NÃO devolve dinheiro de anúncio (o clique no Google já foi cobrado).
      Para não PAGAR o clique, exclua o IP em Google Ads → Exclusões de IP.
    ========================================================================== */
 
@@ -32,10 +30,12 @@ export const BLOCKED_VISITOR_IDS: string[] = [
   // "0f3c9a2e-...-...",
 ];
 
-/** Grava o cookie que o Cloudflare usa para bloquear na borda. */
+// Para onde o visitante bloqueado é mandado.
+const REDIRECT_URL = "https://www.google.com/";
+
+/** Grava o cookie de bloqueio (para uso futuro em borda: Cloudflare/Firewall). */
 function setBlockCookie(): void {
   try {
-    // 1 ano, enviado em todas as requisições do domínio
     document.cookie = "sg_block=1; path=/; max-age=31536000; SameSite=Lax";
   } catch {
     /* ignora */
@@ -60,18 +60,23 @@ async function fetchVisitorIp(): Promise<string> {
 }
 
 /**
- * Retorna true se o visitante deve ser bloqueado (por Visitor ID ou IP).
- * Não atrasa a renderização: o site aparece normal e só bloqueia depois
- * da verificação. Também grava o cookie sg_block para o Cloudflare.
+ * Redireciona o visitante bloqueado (por Visitor ID ou IP) para o Google.
+ * Não atrasa a renderização para quem está liberado: o site aparece normal
+ * e só bloqueia depois da verificação.
  */
 export function useAccessBlock(): boolean {
   const [blocked, setBlocked] = useState(false);
 
   useEffect(() => {
-    // 1) Visitor ID — imediato (localStorage)
-    if (isVisitorBlocked()) {
+    const doBlock = () => {
       setBlockCookie();
       setBlocked(true);
+      window.location.replace(REDIRECT_URL);
+    };
+
+    // 1) Visitor ID — imediato (localStorage)
+    if (isVisitorBlocked()) {
+      doBlock();
       return;
     }
 
@@ -80,8 +85,7 @@ export function useAccessBlock(): boolean {
     let active = true;
     fetchVisitorIp().then((ip) => {
       if (active && ip && BLOCKED_IPS.includes(ip)) {
-        setBlockCookie();
-        setBlocked(true);
+        doBlock();
       }
     });
     return () => {
