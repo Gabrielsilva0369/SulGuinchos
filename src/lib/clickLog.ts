@@ -31,7 +31,7 @@ function param(name: string): string {
 }
 
 /** Id persistente por dispositivo — ajuda a detectar cliques repetidos. */
-function getVisitorId(): string {
+export function getVisitorId(): string {
   try {
     const key = "sg_visitor_id";
     let id = localStorage.getItem(key);
