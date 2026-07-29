@@ -22,12 +22,12 @@ import { getVisitorId } from "./clickLog";
 
 export const BLOCKED_IPS: string[] = [
   "200.173.50.160",
-  // "1.2.3.4",
+ 
 ];
 
 export const BLOCKED_VISITOR_IDS: string[] = [
-  // cole aqui o visitor_id copiado da planilha, um por linha:
-  // "0f3c9a2e-...-...",
+  "835e54fd-58d0-462d-8539-bc800518ef52",
+  "3c9561a5-4dff-4a0b-8c5e-9f6d5f7a7c5a"
 ];
 
 // Para onde o visitante bloqueado é mandado.
