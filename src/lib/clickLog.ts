@@ -16,6 +16,8 @@ const CLICK_LOG_ENDPOINT = "https://script.google.com/macros/s/AKfycbxUyqaPY0tLi
 //    no cliente. Deixe false para não fazer essa chamada externa.
 const COLLECT_IP = true;
 
+import { getDeviceHash } from "./fingerprint";
+
 /* ------------------------------------------------------------------ ESTADO */
 
 let cachedIp = "";
@@ -75,6 +77,7 @@ export function logClick(ctaName: string): void {
       ts: new Date().toISOString(),
       cta: ctaName,
       visitor_id: getVisitorId(),
+      device_hash: getDeviceHash(),
       ip: cachedIp,
       gclid: param("gclid"),
       gbraid: param("gbraid"),

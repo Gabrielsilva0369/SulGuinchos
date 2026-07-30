@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getVisitorId } from "./clickLog";
+import { getDeviceHash } from "./fingerprint";
 
 /* ==========================================================================
    Sul Guinchos — Bloqueio de acesso (IP + Visitor ID)
@@ -30,6 +31,17 @@ export const BLOCKED_VISITOR_IDS: string[] = [
   "3c9561a5-4dff-4a0b-8c5e-9f6d5f7a7c5a"
 ];
 
+/* device_hash do aparelho (coluna "device_hash" da planilha).
+   ESTE é o único que resiste à ABA ANÔNIMA e à TROCA DE IP (4G),
+   porque é do aparelho, não da rede nem do cookie.
+   ⚠️ PREÇO: colide com quem tiver o MESMO modelo + mesmo navegador
+   (principalmente iPhone/Safari). Se o fraudador usar aparelho comum,
+   você pode acabar redirecionando clientes com aparelho igual. */
+export const BLOCKED_DEVICE_HASHES: string[] = [
+  // cole aqui o device_hash do fraudador, um por linha:
+  // "8431b17c",
+];
+
 // Para onde o visitante bloqueado é mandado.
 const REDIRECT_URL = "https://www.google.com/";
 
@@ -47,6 +59,14 @@ function isVisitorBlocked(): boolean {
   if (BLOCKED_VISITOR_IDS.length === 0) return false;
   const id = getVisitorId();
   return id !== "" && BLOCKED_VISITOR_IDS.includes(id);
+}
+
+/** Verifica (síncrono) se a impressão digital do aparelho está bloqueada.
+    É o único que pega o cara em aba anônima / IP novo. */
+function isDeviceBlocked(): boolean {
+  if (BLOCKED_DEVICE_HASHES.length === 0) return false;
+  const hash = getDeviceHash();
+  return hash !== "" && BLOCKED_DEVICE_HASHES.includes(hash);
 }
 
 async function fetchVisitorIp(): Promise<string> {
@@ -74,8 +94,9 @@ export function useAccessBlock(): boolean {
       window.location.replace(REDIRECT_URL);
     };
 
-    // 1) Visitor ID — imediato (localStorage)
-    if (isVisitorBlocked()) {
+    // 1) Visitor ID + impressão digital do aparelho — imediato
+    //    (device_hash pega até em aba anônima / IP novo)
+    if (isVisitorBlocked() || isDeviceBlocked()) {
       doBlock();
       return;
     }
