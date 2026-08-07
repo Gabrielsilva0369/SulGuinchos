@@ -4,8 +4,10 @@ import ServiceCards from "./components/ServiceCards";
 import FinalCTA from "./components/FinalCTA";
 import { useScrollReveal } from "./lib/useScrollReveal";
 import { useAccessBlock } from "./lib/ipBlock";
+import { PhoneProvider } from "./lib/PhoneContext";
+import type { PhoneKey } from "./lib/contact";
 
-function App() {
+function App({ phone }: { phone: PhoneKey }) {
   const blocked = useAccessBlock();
   useScrollReveal();
 
@@ -15,12 +17,14 @@ function App() {
   }
 
   return (
-    <main className="page-shell">
-      <Header />
-      <Hero />
-      <ServiceCards />
-      <FinalCTA />
-    </main>
+    <PhoneProvider phone={phone}>
+      <main className="page-shell">
+        <Header />
+        <Hero />
+        <ServiceCards />
+        <FinalCTA />
+      </main>
+    </PhoneProvider>
   );
 }
 

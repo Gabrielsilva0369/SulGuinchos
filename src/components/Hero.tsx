@@ -1,11 +1,10 @@
 import { trackCtaClick } from "../lib/analytics";
+import { usePhoneContact } from "../lib/PhoneContext";
 import "../styles/hero.css";
 
-const WHATSAPP_URL =
-  "https://wa.me/5511932363802?text=Olá%2C%20preciso%20de%20um%20guincho.%20Pode%20me%20atender%20agora%3F";
-const CALL_URL = "tel:+5511932363802";
-
 function Hero() {
+  const { WHATSAPP_URL, CALL_URL } = usePhoneContact();
+
   return (
     <section id="inicio" className="hero">
       <div className="hero__media">

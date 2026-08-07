@@ -8,6 +8,6 @@ initClickLog();
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <App phone="novo" />
+    <App phone="atendimento" />
   </StrictMode>
 );

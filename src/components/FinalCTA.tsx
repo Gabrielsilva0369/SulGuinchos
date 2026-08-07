@@ -1,11 +1,10 @@
 import { trackCtaClick } from "../lib/analytics";
+import { usePhoneContact } from "../lib/PhoneContext";
 import "../styles/final-cta.css";
 
-const WHATSAPP_URL =
-  "https://wa.me/5511932363802?text=Olá%2C%20preciso%20de%20um%20guincho.%20Pode%20me%20atender%20agora%3F";
-const CALL_URL = "tel:+5511932363802";
-
 function FinalCTA() {
+  const { WHATSAPP_URL, CALL_URL, PHONE_DISPLAY } = usePhoneContact();
+
   return (
     <section id="contato" className="final-cta">
       <div className="final-cta__panel" data-reveal>
@@ -19,12 +18,12 @@ function FinalCTA() {
           href={CALL_URL}
           data-cta="telefone-final"
           onClick={trackCtaClick}
-          aria-label="Ligar para (11) 93236-3802"
+          aria-label={`Ligar para ${PHONE_DISPLAY}`}
         >
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
           </svg>
-          (11) 93236-3802
+          {PHONE_DISPLAY}
         </a>
 
         <a
